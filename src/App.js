@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Text, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 
@@ -12,14 +12,15 @@ import { Loader } from "./components/Loader";
 import { getMe } from "./store/actions";
 
 const App = (props) => {
+    const { getMe } = props;
     const { isAuthenticated } = props;
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const init = () => {
-            let user = AsyncStorage.getItem("user");
+        const init = async () => {
+            let user = await AsyncStorage.getItem("user");
 
-            if (user) {
+            if (Boolean(user)) {
                 getMe(user);
             }
             setIsLoading(false);
@@ -46,4 +47,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+    getMe,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

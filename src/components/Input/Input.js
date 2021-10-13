@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 
 import { Colors, CommonStyles } from "../../styles";
 
@@ -12,6 +12,7 @@ const Input = (props) => {
         containerStyles = {},
         editable = true,
         keyboardType = "default",
+        error = "",
     } = props;
 
     return (
@@ -26,6 +27,7 @@ const Input = (props) => {
                 editable={editable}
                 keyboardType={keyboardType}
             />
+            {Boolean(error) && <Text style={styles.error}>{error}</Text>}
         </View>
     );
 };
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
         borderWidth: 1.4,
         borderColor: Colors.primary,
         borderRadius: 8,
+    },
+    error: {
+        color: "red",
     },
 });
 
