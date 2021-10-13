@@ -24,6 +24,8 @@ const App = (props) => {
             }
             setIsLoading(false);
         };
+
+        init();
     }, []);
 
     const renderStack = () => {
