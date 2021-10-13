@@ -8,7 +8,7 @@ export const httpRequest = axios.create({
 
 export const postConfig = {
     headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json; charset=UTF-8",
     },
 };
 

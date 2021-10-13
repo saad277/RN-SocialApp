@@ -13,19 +13,22 @@ const Input = (props) => {
         editable = true,
         keyboardType = "default",
         error = "",
+        wrapperStyles = {},
+        ...rest
     } = props;
 
     return (
         <View style={[styles.inputView, containerStyles]}>
             <TextInput
                 value={value}
-                style={styles.inputText}
+                style={[styles.inputText, wrapperStyles]}
                 placeholder={placeHolder}
                 placeholderTextColor={Colors.secondary}
                 onChangeText={(value) => onChange(value)}
                 secureTextEntry={secureText}
                 editable={editable}
                 keyboardType={keyboardType}
+                {...rest}
             />
             {Boolean(error) && <Text style={styles.error}>{error}</Text>}
         </View>
@@ -34,7 +37,6 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
     inputView: {
-        borderRadius: 25,
         ...CommonStyles.justifyCenter,
     },
     inputText: {

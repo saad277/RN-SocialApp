@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
-import Material from "react-native-vector-icons/MaterialCommunityIcons";
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import Ionicon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 
 import { CommonStyles, Colors } from "../../styles";
 
+import APP_ROUTES from "../../navigation";
 import { Header } from "../../components/Header";
 import { getPosts } from "../../store/actions";
 
 const Posts = (props) => {
     const { getPosts, posts } = props;
+
+    const navigation = useNavigation();
 
     useEffect(() => {
         getPosts();
@@ -18,10 +22,10 @@ const Posts = (props) => {
     const renderItem = ({ item, index }) => {
         const { title, body } = item;
         return (
-            <View style={[styles.card, index === mock.length && styles.mb20]}>
+            <View style={[styles.card, index === posts.length && styles.mb20]}>
                 <View style={styles.detailsContainer}>
                     <Text style={styles.name}>{title}</Text>
-                    <Text style={styles.fees}>{body}</Text>
+                    <Text style={styles.body}>{body}</Text>
                 </View>
             </View>
         );
@@ -30,8 +34,13 @@ const Posts = (props) => {
     return (
         <View style={styles.container}>
             <Header title="Home" />
-
             <FlatList data={posts} renderItem={renderItem} keyExtractor={(item) => item.id} />
+            <TouchableOpacity
+                onPress={() => navigation.navigate(APP_ROUTES.CREATE_POST)}
+                style={styles.floating}
+            >
+                <Ionicon name="add-circle" color={Colors.primary} size={60} />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -52,16 +61,6 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         marginHorizontal: 20,
     },
-    imageContainer: {
-        paddingTop: 8,
-        ...CommonStyles.alignItemCenter,
-    },
-    img: {
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        marginLeft: 20,
-    },
     detailsContainer: {
         marginLeft: 15,
         paddingTop: 8,
@@ -71,20 +70,15 @@ const styles = StyleSheet.create({
         color: "#607D8B",
         fontSize: 22,
     },
-    designation: {
+    body: {
         color: "gray",
+        marginBottom: 15,
     },
-    timing: {
-        marginTop: 8,
-        ...CommonStyles.flexRow,
-        ...CommonStyles.alignItemCenter,
-    },
-    time: {
-        marginLeft: 5,
-        fontSize: 11,
-    },
-    fees: {
-        color: "gray",
+    floating: {
+        position: "absolute",
+        zIndex: 22,
+        bottom: 15,
+        right: 15,
     },
 });
 
@@ -99,11 +93,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
-
-const mock = [
-    { id: 1, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },
-    { id: 2, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },
-    { id: 3, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },
-    { id: 4, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },
-    { id: 5, name: "Dr.Smith", timing: "10:45 - 9:45", fees: "$10", designation: "Surgeon" },
-];

@@ -15,7 +15,7 @@ const validationObject = Yup.object({
     email: Yup.string()
         .required("This is a required field")
         .email("Please enter a valid email")
-        .min(6, "Must be between 6 to 64 characters")
+        .min(6, "Must be between 6 to 54 characters")
         .max(54, "Max 54 characters are allowed"),
     password: Yup.string()
         .required("This is a required field")
