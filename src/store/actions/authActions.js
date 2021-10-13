@@ -6,6 +6,13 @@ export const LOG_OUT = "LOG_OUT";
 
 export const login = (payload) => (dispatch) => {};
 
+export const getMe = (payload) => (dispatch) => {
+    dispatch({
+        type: ME_SUCCESS,
+        payload,
+    });
+};
+
 export const logout = () => async (dispatch) => {
     await AsyncStorage.removeItem("token");
     dispatch({
